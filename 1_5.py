@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+import matplotlib.pyplot as plt
 import pathlib
 import tensorflow as tf
 import pandas as pd
@@ -39,7 +40,7 @@ def build_model():
 def plot_history(history):
   hist = pd.DataFrame(history.history)
   hist['epoch'] = history.epoch
-  
+
   plt.figure()
   plt.xlabel('Epoch')
   plt.ylabel('Mean Abs Error [MPG]')
@@ -49,7 +50,7 @@ def plot_history(history):
            label = 'Val Error')
   plt.ylim([0,5])
   plt.legend()
-  
+
   plt.figure()
   plt.xlabel('Epoch')
   plt.ylabel('Mean Square Error [$MPG^2$]')
@@ -66,7 +67,7 @@ def plot_history(history):
 dataset_path = keras.utils.get_file("auto-mpg.data", "https://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data")
 
 column_names = ['MPG','Cylinders','Displacement','Horsepower','Weight',
-                'Acceleration', 'Model Year', 'Origin'] 
+                'Acceleration', 'Model Year', 'Origin']
 raw_dataset = pd.read_csv(dataset_path, names=column_names,
                       na_values = "?", comment='\t',
                       sep=" ", skipinitialspace=True)
