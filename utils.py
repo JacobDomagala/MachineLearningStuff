@@ -37,3 +37,15 @@ def plot_value_array(i, predictions_array, true_label):
   
   thisplot[predicted_label].set_color('red')
   thisplot[true_label].set_color('blue')
+
+def display_single_img(dataset):
+  for image, label in dataset.take(1):
+    break
+  image = image.numpy().reshape((28,28))
+
+  # Plot the image - voila a piece of fashion clothing
+  plt.figure()
+  plt.imshow(image, cmap=plt.cm.binary)
+  plt.colorbar()
+  plt.grid(False)
+  plt.show()
