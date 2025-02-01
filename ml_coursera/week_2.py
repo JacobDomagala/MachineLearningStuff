@@ -1,30 +1,27 @@
 import numpy as np
 
 x = np.arange(500).reshape(-1, 10)
-y = np.random.rand(x.shape[0])
+y = np.random.rand(x.shape[0]).reshape(-1, 1)
 m = x.shape[0]
 
 def cost(w_in, b_in):
-    total_cost = 0.0
-    for i in range(m):
-        total_cost += ((np.dot(x[i], w_in) + b_in) - y[i]) ** 2
+    total_cost = ((x @ w_in + b_in) - y) ** 2
+    total_cost = np.sum(total_cost)
 
     return total_cost / (2 * m)
 
 def gradient(w_in, b_in):
-    dw = np.zeros(w_in.shape)
-    db = 0
-    for i in range(x.shape[0]):
-        err = (np.dot(w_in, x[i]) + b_in) - y[i]
-        dw += err * x[i]
-        db += err
+    err = (x @ w_in + b_in) - y
+    
+    dw = x.transpose() @ err
+    db = np.sum(err)
 
     return dw/m, db/m
 
 def gradient_descent(num_iter):
-    w = np.zeros(x.shape[1])
+    w = np.zeros(x.shape[1]).reshape(-1,1)
     b = 0.
-    alpha = 0.0000003
+    alpha = 0.000001
     
     for i in range(num_iter):
         dw, db = gradient(w, b)
